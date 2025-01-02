@@ -20,4 +20,4 @@ A simple and secure web application designed for individuals to store and manage
 ## How to Use
 1. Clone this repository:
    ```bash
-   git clone https://github.com/yourusername/your-repo-name.git
+   git clone https://github.com/AkshilManiya/PswdContainer.git
