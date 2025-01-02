@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Password Container</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <style>
+      /* General Styles */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+    }
+
+    body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background-color: #f4f4f9;
+        padding: 20px;
+    }
+
+    /* Header Styles */
+    #header {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        
+        width: 80%;
+        margin: auto;
+        padding: none;
+        align-items: stretch;
+    }
+
+    #header input[type="text"] {
+        flex: 1;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        min-width: 180px;
+        margin-bottom: 0px;
+    }
+
+    .menus button {
+        border: none;
+        border-radius: 5px;
+        background-color: #007bff;
+        color: white;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .menus button:hover {
+        background-color: #0056b3;
+    }
+
+    /* Section Styles */
+    section {
+        width: 80%;
+        margin: 20px auto;
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+    }
+
+    h2 {
+        text-align: center;
+        color: #007bff;
+        margin-bottom: 20px;
+    }
+
+    label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    input[type="text"] {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        margin-bottom: 15px;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        color: #fff;
+        background-color: #007bff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+    }
+
+    .button-group {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    input[type="hidden"] {
+        display: none;
+    }
+
+
+    /* View Section */
+    #View {
+        background-color: transparent;
+        box-shadow: none;
+        padding: 20px;
+    }
+
+    #View_data {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        background-color: transparent;
+    }
+
+    .data-container {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        border-radius: 12px;
+        background-color: #ffffff;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .data-container:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .top-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .title {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #333333;
+        padding: 0px 5px;
+    }
+
+    .title_desc {
+        font-size: 1rem;
+        color: #777777;
+    }
+
+    .buttons {
+        display: flex;
+        gap: 10px;
+    }
+
+    .buttons button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        padding: 8px;
+        border-radius: 50%;
+        transition: background-color 0.2s ease;
+    }
+
+    .buttons button:hover {
+        background-color: rgba(0, 0, 0, 0.05);
+    }
+
+    .buttons img {
+        width: 20px;
+        height: 20px;
+    }
+
+
+
+    .middle-container {
+      margin-bottom: 10px;
+      color: #555555;
+      background-color: #f1f1f1;
+      padding: 5px 10px;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+    }
+    
+    .password {
+        font-size: 1rem;
+        display: flex;
+        align-items: center;
+        width: 100%;
+        background: #ffffff;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        padding: 5px;
+    }
+    
+    .password input {
+        border: none;
+        outline: none;
+        flex: 1;
+        font-size: 1rem;
+        padding: 5px;
+        background: transparent;
+        margin-bottom: 0px;
+    }
+    
+    .middle-container span img {
+        cursor: pointer;
+        width: 20px;
+        height: 20px;
+        margin-left: 10px;
+        transition: opacity 0.2s ease;
+    }
+    
+    .middle-container span img:hover {
+        opacity: 0.8;
+        transform: scale(1.2);
+    }
+
+    .down-container {
+
+    }
+
+    .desc {
+        font-size: 1rem;
+        color: #777777;
+        line-height: 1.5;
+        padding: 0px 10px;
+    }
+
+    @media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+
+    /* Header Styles */
+    #header {
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+    }
+
+    #header input[type="text"] {
+        min-width: 100%;
+    }
+
+    .menus button {
+        width: 100%;
+    }
+
+    /* Section Styles */
+    section {
+        width: 100%;
+        padding: 15px;
+        border-radius: 8px;
+    }
+
+    h2 {
+        font-size: 1.25rem;
+    }
+
+    input[type="text"] {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    button {
+        font-size: 14px;
+        padding: 8px 15px;
+    }
+
+    .button-group {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    /* View Section */
+    #View_data {
+        gap: 15px;
+    }
+
+    .data-container {
+        padding: 15px;
+        border-radius: 10px;
+    }
+
+    .top-container .title {
+        font-size: 1.25rem;
+    }
+
+    .top-container .title_desc {
+        font-size: 0.875rem;
+    }
+
+    .buttons button {
+        padding: 6px;
+        border-radius: 50%;
+    }
+
+    .buttons img {
+        width: 18px;
+        height: 18px;
+    }
+
+    .middle-container {
+        padding: 8px;
+    }
+
+    .password input {
+        font-size: 14px;
+        padding: 4px;
+    }
+
+    .middle-container span img {
+        width: 18px;
+        height: 18px;
+        margin-left: 8px;
+    }
+
+    .desc {
+        font-size: 0.875rem;
+        padding: 0 8px;
+    }
+}
+
+
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <style>
+      .toast-container {
+        position: fixed;
+        top: 1rem;
+        right: 1rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        z-index: 1000;
+        pointer-events: none; /* Prevent interactions with the container itself */
+      }
+      
+      .toast {
+        padding: 1rem;
+        border-radius: 8px;
+        color: #fff;
+        min-width: 250px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        animation: slide-in 0.3s ease-out;
+        font-family: Arial, sans-serif;
+        font-size: 0.9rem;
+        opacity: 1;
+        transition: opacity 0.2s ease-in-out;
+        pointer-events: auto;
+      }
+      
+      .toast.success {
+        background-color: #4caf50;
+        border-left: 4px solid #2e7d32;
+      }
+      
+      .toast.info {
+        background-color: #2196f3;
+        border-left: 4px solid #1565c0;
+      }
+      
+      .toast.warning {
+        background-color: #ff9800;
+        border-left: 4px solid #e65100;
+      }
+      
+      .toast.danger {
+        background-color: #f44336;
+        border-left: 4px solid #b71c1c;
+      }
+      
+      .toast:hover {
+        opacity: 0.9;
+        transform: scale(1.02);
+      }
+      
+      @keyframes slide-in {
+        from {
+          transform: translateX(100%);
+          opacity: 0;
+        }
+        to {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="toast-container" id="toast-container"></div>
+
+    <section id="header">
+      <input type="text" id="search" placeholder="Search..." />
+      <div class="menus">
+        <button onclick="search()">Search</button>
+        <button onclick="View_frame()">View</button>
+        <button onclick="Add_frame()">Add New</button>
+    </div>
+    </section>
+
+    <section id="Add" class="active">
+      <h2>Add New</h2>
+      <div>
+        <label for="title">Title</label>
+        <input type="text" id="title" placeholder="Enter title" />
+      </div>
+      <div>
+        <label for="title_desc">Title Description</label>
+        <input type="text" id="title_desc" placeholder="Enter title description" />
+      </div>
+      <div>
+        <label for="pass">Password</label>
+        <input type="text" id="pass" placeholder="Enter password" />
+      </div>
+      <div>
+        <label for="desc">Description</label>
+        <input type="text" id="desc" placeholder="Enter description" />
+      </div>
+      <div class="button-group">
+        <button onclick="Back()">Back</button>
+        <button onclick="add_new()">Save</button>
+      </div>
+    </section>
+  
+    <section id="Update">
+      <h2>Update</h2>
+      <input type="hidden" id="new_id" />
+      <div>
+        <label for="new_title">Title</label>
+        <input type="text" id="new_title" placeholder="Update title" />
+      </div>
+      <div>
+        <label for="new_title_desc">Title Description</label>
+        <input type="text" id="new_title_desc" placeholder="Update title description" />
+      </div>
+      <div>
+        <label for="new_pass">Password</label>
+        <input type="text" id="new_pass" placeholder="Update password" />
+      </div>
+      <div>
+        <label for="new_desc">Description</label>
+        <input type="text" id="new_desc" placeholder="Update description" />
+      </div>
+      <div class="button-group">
+        <button onclick="Back()">Back</button>
+        <button onclick="save()">Save</button>
+      </div>
+    </section>
+  
+
+    <section id="View">
+      <div id="View_data">
+        
+      </div>
+    </section>
+
+    
+
+    <script>
+      View_frame()
+      
+      function Add_frame() {
+        $('#Add').show()
+        $('#View').hide()
+        $('#Update').hide()
+      }
+      
+      function View_frame() {
+        $('#View').show()
+        $('#Update').hide()
+        $('#Add').hide()
+        fetch_all()
+      }
+      
+      function Update_frame() {
+        $('#Update').show()
+        $('#Add').hide()
+        $('#View').hide()
+      }
+
+      function Back(){
+        $("#title").val("");
+        $("#title_desc").val("");
+        $("#pass").val("");
+        $("#desc").val("");
+
+        $("#new_title").val("");
+        $("#new_title_desc").val("");
+        $("#new_pass").val("");
+        $("#new_desc").val("");
+        $("#new_id").val("");
+
+        View_frame();
+      }
+      
+      function add_new() {
+        title = $('#title').val()
+        title_desc = $('#title_desc').val()
+        pass = $('#pass').val()
+        desc = $('#desc').val()
+      
+        $.ajax({
+          url: '/pswd/save',
+          type: 'POST',
+          data: {
+            Title: title,
+            Title_desc: title_desc,
+            Password: pass,
+            Desc: desc
+          },
+          success: function (response) {
+            if (response.success) {
+              showNotification('success', response.msg, 3)
+              $("#title").val("");
+              $("#title_desc").val("");
+              $("#pass").val("");
+              $("#desc").val("");
+              View_frame()
+            } else {
+              showNotification('danger', response.msg, 3)
+            }
+          },
+          error: function (error) {
+            const errorMessage = error.responseJSON?.msg || 'Unknown error'
+            $('#result').text('Error: ' + errorMessage)
+          }
+        })
+      }
+      
+      function fetch_all() {
+        $.ajax({
+            url: '/pswd/fetch_all',
+            type: 'GET',
+            success: function (response) {
+                if (response.success) {
+                    const data = response.data;
+                    const tableBody = $('#View_data');
+                    tableBody.empty();
+
+                    data.forEach((item) => {
+                        const row = `
+                            <div class="data-container">
+                                <div class="top-container">
+                                    <div class="title">${item.Title}</div>
+                                    <div class="title_desc">${item.Title_desc}</div>
+                                    <div class="buttons">
+                                        <button aria-label="Edit" onclick="update_item(${item.Pswd_id})"><img class="edit" src="static/img/edit.png" alt="Edit"></button>
+                                        <button aria-label="Delete" onclick="delete_item(${item.Pswd_id})"><img class="delete" src="static/img/trash.png" alt="Delete"></button>
+                                    </div>
+                                </div>
+                                <div class="middle-container">
+                                    <div class="password">
+                                    <input type="password" value="${item.Password}" id="password-${item.Pswd_id}" readonly="readonly">
+                                      <span>
+                                        <img class="toggle-password" src="static/img/hide.png" alt="Show Password" onclick="togglePassword('password-${item.Pswd_id}', this)">
+                                      </span>
+                                    </div>
+                                    <span><img class="copy" src="static/img/copy.png" alt="Copy" onclick="copyToClipboard('password-${item.Pswd_id}')"></span>
+                                </div>
+                                <div class="down-container">
+                                    <div class="desc">${item.Desc}</div>
+                                </div>
+                            </div>
+                        `;
+                        tableBody.append(row);
+                    });
+                } else {
+                    showNotification('danger', response.msg, 3)
+                }
+            },
+            error: function (error) {
+                const errorMessage = error.responseJSON?.msg || 'Unknown error';
+                $('#result').text('Error: ' + errorMessage);
+            }
+        });
+    }
+
+    function copyToClipboard(inputId) {
+      const input = document.getElementById(inputId);
+      input.select();
+      input.setSelectionRange(0, 99999);
+      navigator.clipboard.writeText(input.value)
+          .then(() => {
+            showNotification('info', "password copied to clipboard", 3)
+          })
+          .catch(() => {
+            showNotification('danger', "Failed to copy the password", 3)
+          });
+  }
+  
+
+    function togglePassword(inputId, toggleIcon) {
+      const input = document.getElementById(inputId);
+      const isPassword = input.type === "password";
+      input.type = isPassword ? "text" : "password";
+      toggleIcon.src = isPassword ? "static/img/view.png" : "static/img/hide.png";
+  }
+  
+    
+      
+      function update_item(id) {
+        $.ajax({
+          url: '/pswd/fetch',
+          type: 'POST',
+          data: { pswd_id: id },
+          success: function (response) {
+            if (response.success){
+              $("#new_title").val(response.data[0].Title);
+              $("#new_title_desc").val(response.data[0].Title_desc);
+              $("#new_pass").val(response.data[0].Password);
+              $("#new_desc").val(response.data[0].Desc);
+              $("#new_id").val(response.data[0].Pswd_id);
+              Update_frame();
+            }
+            else{
+              showNotification('danger', response.msg, 3)
+            }
+          },
+          error: function (error) {
+            $('#result').text('Error: ' + error.responseJSON.error)
+          }
+        })
+      }
+      
+      function save() {
+        id = $("#new_id").val();
+        title = $('#new_title').val()
+        title_desc = $('#new_title_desc').val()
+        pass = $('#new_pass').val()
+        desc = $('#new_desc').val()
+      
+        $.ajax({
+          url: '/pswd/update',
+          type: 'POST',
+          data: { pswd_id: id, Title: title, Title_desc: title_desc, Password: pass, Desc: desc },
+          success: function (response) {
+            if (response.success) {
+              showNotification('success', response.msg, 3)
+              View_frame()
+            } else {
+              showNotification('danger', response.msg, 3)
+            }
+          },
+          error: function (error) {
+            $('#result').text('Error: ' + error.responseJSON.error)
+          }
+        })
+      }
+      
+      function delete_item(id) {
+        $.ajax({
+          url: '/pswd/delete',
+          type: 'POST',
+          data: { pswd_id: id },
+          success: function (response) {
+            if (response.success) {
+              showNotification('success', response.msg, 3)
+              View_frame()
+            } else {
+              showNotification('danger', response.msg, 3)
+            }
+          },
+          error: function (error) {
+            $('#result').text('Error: ' + error.responseJSON.error)
+          }
+        })
+      }
+      
+      function showNotification(type, message, duration) {
+        const container = document.getElementById('toast-container')
+      
+        const toast = document.createElement('div')
+        toast.className = `toast ${type}`
+        toast.innerText = message
+      
+        container.appendChild(toast)
+      
+        setTimeout(() => {
+          container.removeChild(toast)
+        }, duration * 1000)
+      }
+    </script>
+  </body>
+</html>
